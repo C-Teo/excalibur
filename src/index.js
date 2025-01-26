@@ -1,29 +1,29 @@
-import { google } from 'googleapis'
 import dotenv from 'dotenv'
+import { google } from 'googleapis'
 import { Client, GatewayIntentBits } from 'discord.js'
+import { sheets, spreadsheet } from "./api/google/client.js"
 
 dotenv.config()
 
-async function main() {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: '../secrets.json',
-        scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-    })
+const auth = new google.auth.GoogleAuth({
+    keyFile: '../config/secrets.json',
+    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+})
 
-    const sheets = google.sheets({
-        version: 'v4',
-        auth: auth,
-    })
+try {
+    const table = (await spreadsheet(
+        await sheets(auth),
+        "1Cqq_EFGj8I3shKUckN50gdCgf84YeqWF3Esd8Uo4VV8",
+        "Sheet1!A1:D6",
+    )).data.values 
 
-    // const authClient = await auth.getClient();
-    const spreadsheet = await sheets.spreadsheets.values.get({
-        "spreadsheetId": "1Cqq_EFGj8I3shKUckN50gdCgf84YeqWF3Esd8Uo4VV8",
-        "range": "Sheet1!A1:D6",
-    });
+    const headers = table[0];
 
-    for (let row of spreadsheet.data.values) {
-        console.log(row)
+    for (let i = 1; i < table.length; i++) {
+        console.log(table[i]);
     }
+} catch (error) {
+    console.error('Error:', error)
 }
 
 const client = new Client({
@@ -35,6 +35,4 @@ const client = new Client({
     ],
 });
 
-client.login(process.env.DISCORD_TOKEN)
-
-main().catch(console.error);
+// client.login(process.env.DISCORD_TOKEN)
