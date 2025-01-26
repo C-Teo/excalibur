@@ -1,7 +1,8 @@
-const { google } = require('googleapis')
+import { google } from 'googleapis'
 import dotenv from 'dotenv'
-dotenv.config()
 import { Client, GatewayIntentBits } from 'discord.js'
+
+dotenv.config()
 
 async function main() {
     const auth = new google.auth.GoogleAuth({
@@ -34,7 +35,6 @@ const client = new Client({
     ],
 });
 
-console.log(process.env.DISCORD_TOKEN)
-// client.login(process.env.DISCORD_TOKEN)
+client.login(process.env.DISCORD_TOKEN)
 
 main().catch(console.error);
