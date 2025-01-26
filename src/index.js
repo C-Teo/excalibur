@@ -6,7 +6,7 @@ dotenv.config()
 
 async function main() {
     const auth = new google.auth.GoogleAuth({
-        keyFile: 'secrets.json',
+        keyFile: '../secrets.json',
         scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     })
 
