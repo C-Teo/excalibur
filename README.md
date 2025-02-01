@@ -120,6 +120,27 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
+
+Setting up the bot can be kind of confusing for the first time but this documentation should help you get started! There is a couple of things we'll have to configure, such as:
+- Enabling the Sheets API on your Google Cloud Console
+- Adding a Service Account for your Sheets API
+- Creating a Google Sheets and sharing your Service Account with it
+- Downloading the secrets.json for your service account and putting it in the /config folder
+- Creating a new Discord bot
+- Getting the Discord Bot token and putting it in a config.json file in the /config folder
+- Running the Discord bot locally (or on a server)
+
+You might ask, why do I have to run the bot myself, why can't I just add yours? Well... a service account has a couple of benefits.
+> - Persistent access without user login
+> - Server-side authentication
+> - No OAuth token refresh needed
+> - Suitable for background/automated tasks
+
+And since you'd have to link your service account to the bot, it would be kind of risky to set up a command to upload your credentials to the bot. This adds a whole new layer of security mishaps that I don't think are worth it. The bot is lightweight and easy to run, the only issue is that you have to find a server to run it for you. 
+
+
+
+
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
