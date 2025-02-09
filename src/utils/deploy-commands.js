@@ -1,4 +1,4 @@
-import { getCommandFiles } from "./get-commands";
+import { getCommandFiles } from "./get-commands.js";
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
 

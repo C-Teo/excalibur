@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
-import { getCommandFiles } from "./utils/get-commands";
+import { getCommandFiles } from "./utils/get-commands.js";
 dotenv.config();
 
 // I don't enjoy JavaScript... it has no main function
@@ -29,7 +29,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 	try {
 		await command.execute(interaction);
-		console.log(interaction);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

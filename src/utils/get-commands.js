@@ -6,7 +6,7 @@ export async function getCommandFiles() {
 	const commands = [];
 	const __filename = fileURLToPath(import.meta.url);
 	const __dirname = path.dirname(__filename);
-	const commandsFolderPath = path.join(__dirname, "commands");
+	const commandsFolderPath = path.join(__dirname, "/../commands");
 	const commandsFiles = fs
 		.readdirSync(commandsFolderPath)
 		.filter((file) => file.endsWith(".js"));
