@@ -1,13 +1,11 @@
 import dotenv from "dotenv";
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { Collection, Events } from "discord.js";
 import { getCommandFiles } from "./utils/get-commands.js";
+import getClient from "./client.js";
 dotenv.config();
 
 // I don't enjoy JavaScript... it has no main function
-const client = new Client({
-	intents: [GatewayIntentBits.Guilds],
-});
-
+const client = getClient();
 client.once(Events.ClientReady, (readyClient) => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
