@@ -1,9 +1,11 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { readConfig } from "./../utils/config.js";
+import getClient from "./../client.js";
 
 export default {
 	data: new SlashCommandBuilder()
 		.setName("ping")
-		.setDescription("Replies with Pong!"),
+		.setDescription("Pings the channel with a reminder."),
 	async execute(interaction) {
 		const embed = new EmbedBuilder()
 			.setColor(0x0099ff)
@@ -18,9 +20,33 @@ export default {
 				iconURL: "https://i.imgur.com/AfFp7pu.png",
 			});
 
-		await interaction.reply({
+		const guildId = interaction.guild.id;
+		const config = await readConfig();
+
+		if (config[guildId]) {
+			embed.addFields({
+				name: "Configured Channel",
+				value: `<#${config[guildId].channel}>`,
+			});
+		} else {
+			await interaction.reply({
+				content: "No channel has been configured.",
+				ephemeral: true,
+			});
+			return;
+		}
+
+		const guild = getClient().guilds.cache.get(guildId);
+		const channel = guild.channels.cache.get(config[guildId].channel);
+
+		await channel.send({
 			embeds: [embed],
 			allowedMentions: { users: [interaction.user.id] },
+		});
+
+		await interaction.reply({
+			content: "Ping sent successfully.",
+			ephemeral: true,
 		});
 	},
 };
