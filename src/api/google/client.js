@@ -1,6 +1,4 @@
 import { google } from "googleapis";
-import dotenv from "dotenv";
-dotenv.config();
 
 async function sheets(auth) {
 	const sheets = google.sheets({

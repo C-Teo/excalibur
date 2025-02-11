@@ -1,8 +1,9 @@
 import { getCommandFiles } from "./get-commands.js";
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
+import logger from "./logger.js";
 
-dotenv.config();
+dotenv.config(); // This file runs seperate from index.js
 
 const commands = (await getCommandFiles()).map((command) =>
 	command.data.toJSON()
@@ -11,7 +12,7 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 
 (async () => {
 	try {
-		console.log(
+		logger.info(
 			`Started refreshing ${commands.length} application (/) commands.`
 		);
 
@@ -20,7 +21,7 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 			{ body: commands }
 		);
 
-		console.log(
+		logger.info(
 			`Successfully reloaded ${data.length} application (/) commands.`
 		);
 	} catch (error) {

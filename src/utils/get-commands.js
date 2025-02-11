@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
+import logger from "./logger.js";
 
 export async function getCommandFiles() {
 	const commands = [];
@@ -18,7 +19,7 @@ export async function getCommandFiles() {
 		if ("data" in command.default && "execute" in command.default) {
 			commands.push(command.default);
 		} else {
-			console.log(
+			logger.info(
 				`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
 			);
 		}
