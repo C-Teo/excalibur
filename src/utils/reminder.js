@@ -1,43 +1,33 @@
-const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+function getReadyToBeRemindedTasks(reminders) {
+	const today = new Date();
+	const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+	const todayOnly = new Date(
+		today.getFullYear(),
+		today.getMonth(),
+		today.getDate()
+	);
 
-function isShortReminderDue(dueDate, today) {
-  const dueDateOnly = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
-  return dueDateOnly.getTime() === today.getTime();
-}
+	return reminders.filter((reminder) => {
+		const { taskDueDate, reminderType, done } = reminder;
+		const dueDateOnly = new Date(
+			taskDueDate.getFullYear(),
+			taskDueDate.getMonth(),
+			taskDueDate.getDate()
+		);
+		const daysDifference = Math.floor(
+			(dueDateOnly - todayOnly) / oneDayInMilliseconds
+		);
 
-function isMidReminderDue(dueDate, today) {
-  const daysDifference = Math.floor((dueDate - today) / oneDayInMilliseconds);
-  return isShortReminderDue(dueDate, today) || daysDifference === 1 || daysDifference === 2;
-}
+		const validDaysDifference = {
+			short: [0],
+			mid: [0, 1, 2],
+			long: [0, 1, 2, 7, 14, 21],
+		};
 
-function isLongReminderDue(dueDate, today) {
-  const daysDifference = Math.floor((dueDate - today) / oneDayInMilliseconds);
-  return isMidReminderDue(dueDate, today) || daysDifference === 7 || daysDifference === 14 || daysDifference === 21;
-}
-
-export function getReadyToBeRemindedTasks(processedData) {
-  let today = new Date();
-  today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-  const header = processedData[0];
-  const dueDateIndex = header.indexOf('Task Due Date');
-  const reminderTypeIndex = header.indexOf('Reminder Type');
-
-  return processedData.filter((row, index) => {
-    if (index === 0) return false; 
-
-    const dueDate = row[dueDateIndex];
-    const reminderType = row[reminderTypeIndex].toLowerCase();
-
-    switch (reminderType) {
-      case 'short':
-        return isShortReminderDue(dueDate, today);
-      case 'mid':
-        return isMidReminderDue(dueDate, today);
-      case 'long':
-        return isLongReminderDue(dueDate, today);
-      default:
-        return false;
-    }
-  });
+		return (
+			validDaysDifference[reminderType.toLowerCase()].includes(
+				daysDifference
+			) && !done
+		);
+	});
 }
