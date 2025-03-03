@@ -31,3 +31,5 @@ class Reminder {
 		}, Assignee: ${this.assignee}, Done: ${this.done}`;
 	}
 }
+
+export default Reminder;
