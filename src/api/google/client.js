@@ -18,9 +18,9 @@ async function spreadsheet(sheets, id, range) {
 	return spreadsheet;
 }
 
-export default async function send_google_request() {
+export async function send_google_request() {
 	const auth = new google.auth.GoogleAuth({
-		keyFile: "/config/secrets.json",
+		keyFile: "./config/secrets.json",
 		scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 	});
 
