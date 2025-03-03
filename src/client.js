@@ -4,7 +4,7 @@ let client;
 export default function getClient() {
 	if (client) return client;
 	client = new Client({
-		intents: [GatewayIntentBits.Guilds],
+		intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
 	});
 	return client;
 }
