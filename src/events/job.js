@@ -20,7 +20,7 @@ function mock_interaction(guildId) {
 }
 
 export default function cronjob_scheduler() {
-	cron.schedule("*/30 * * * * *", async () => {
+	cron.schedule("0 11 * * *", async () => {
 		const config = await readConfig();
 
 		if (!config) {

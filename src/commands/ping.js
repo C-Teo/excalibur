@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, Client } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import { readConfig } from "./../utils/config.js";
 import getClient from "./../client.js";
 import { send_google_request } from "../api/google/client.js";

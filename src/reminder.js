@@ -22,14 +22,6 @@ class Reminder {
 	isDone() {
 		return this.done;
 	}
-
-	toString() {
-		return `Task: ${this.task}, Description: ${
-			this.taskDescription
-		}, Due Date: ${this.getFormattedDueDate()}, Reminder Type: ${
-			this.reminderType
-		}, Assignee: ${this.assignee}, Done: ${this.done}`;
-	}
 }
 
 export default Reminder;

@@ -19,6 +19,7 @@ async function spreadsheet(sheets, id, range) {
 }
 
 export async function send_google_request() {
+	// TODO: Implement the function to send a request to the Google Sheets API dynamically
 	const auth = new google.auth.GoogleAuth({
 		keyFile: "./config/secrets.json",
 		scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],

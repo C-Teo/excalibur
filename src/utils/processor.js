@@ -62,7 +62,8 @@ export function processArrayOfArrays(arr) {
 }
 
 export function getReadyToBeRemindedTasks(reminders) {
-	const today = new Date();
+	let today = new Date();
+	today = today.setHours(today.getHours() - 5);
 	const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
 	const todayOnly = new Date(
 		today.getFullYear(),
@@ -88,9 +89,11 @@ export function getReadyToBeRemindedTasks(reminders) {
 		};
 
 		return (
-			validDaysDifference[reminderType.toLowerCase()].includes(
+			(validDaysDifference[reminderType.toLowerCase()].includes(
 				daysDifference
-			) && !done
+			) &&
+				!done) ||
+			daysDifference < 0
 		);
 	});
 }
