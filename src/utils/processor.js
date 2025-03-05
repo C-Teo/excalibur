@@ -91,9 +91,9 @@ export function getReadyToBeRemindedTasks(reminders) {
 		return (
 			(validDaysDifference[reminderType.toLowerCase()].includes(
 				daysDifference
-			) &&
-				!done) ||
-			daysDifference < 0
+			) ||
+				daysDifference < 0) &&
+			!done
 		);
 	});
 }
