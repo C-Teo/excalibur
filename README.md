@@ -1,58 +1,18 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="">
+    <img src="assets/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Excalibur</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    Excalibur is an event management Discord bot written in Node.js that leverages the Google API. It integrates seamlessly with Google Sheets to provide robust reminder functionalities.
   </p>
 </div>
 
-
-
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -78,108 +38,115 @@
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+This guide walks you through the process of setting up the Excalibur Discord bot. Follow the steps carefully to ensure the bot is configured correctly and works seamlessly with Google Sheets and Discord.
 
+Prerequisites
+
+Before starting, ensure you have the following:
+- A Google Cloud account
+- A Discord account
+- Node.js installed on your machine
+
+# Setup
+
+## 1. Clone the Repository
+
+Start by cloning the repository to your local machine:
+```
+git clone git@github.com:C-Teo/excalibur.git
+```
+
+## 2. Install Dependencies
+
+Navigate to the root directory of the project and install all required modules:
+```
+npm install
+```
+
+## 3. Set Up Google Sheets API
+
+To enable the bot to interact with Google Sheets, follow these steps:
+1. Go to the Google Cloud Console (https://console.cloud.google.com/).
+2. Create a new project by selecting **Select a Project** -> **New Project**.
+3. Once your project is created, go to **API & Services** and click on **Enable API & Services**.
+4. Search for **Google Sheets API** and enable it.
+
+## 4. Create Service Account Credentials
+1. On the Google Sheets API page, click Create Credentials.
+2. Select Service Account and choose Google Sheets API.
+3. Check Application Data and provide a name for the service account.
+4. Click Agree and Continue, then grant the service account IAM Editor access to the project.
+5. Click Done once the credentials are created.
+
+## 5. Download Service Account Key
+1. In the Credentials tab, click on the service account you just created.
+2. Under Keys, click Add Key, then select JSON.
+3. Name the file secrets.json.
+4. Create a folder named config in the root directory of the project and place the secrets.json file inside it.
+
+## 6. Share Google Sheet with Service Account
+1. Open your Google Sheet.
+2. Share it with the service account email, which can be found in the Credentials tab of the Google Sheets API page.
+3. Give the service account view access (edit permissions are not needed).
+> Note: If you're having trouble with steps 3-6, refer to this video guide (https://youtu.be/zCEJurLGFRk?si=IhRPMxeZN3T2UXCA) (time: 1:56 - 8:30).
+
+## 7. Set Up Discord Bot
+1. Go to the Discord Developer Portal.
+2. Under Applications, create a new application and name it as desired.
+3. Go to the OAuth2 section and select Bot.
+4. Under Bot Permissions, give the bot all necessary text permissions.
+5. Enable Server Member Intent on the bot page.
+
+## 8. Create the .env File
+In the root directory of the project, create a .env file with the following content:
+```
+DISCORD_TOKEN=""
+CLIENT_ID=""
+BOT_ID=
+```
+- DISCORD_TOKEN: The bot token you get from the Discord Developer Portal.
+- CLIENT_ID: The application ID found under General Info in the Discord Developer Portal.
+-  BOT_ID: The bot ID found under the Bot section in the Discord Developer Portal.
+
+## 9. Configure Sheet URL and Range
+In the .env file, set the following values:
+- SHEET_URL: The URL of your Google Sheet.
+- SHEET_RANGE: The range you wish to interact with (e.g., Sheet1!A1:B10).
+
+## 10. Deploy Commands
+Run the following command to deploy your Discord bot commands:
+```
+node src/utils/deploy-commands.js
+```
+
+11. Start the Bot
+Once everything is set up, run the bot:
+```
+node src/index.js
+```
+
+# Why You Need to Set Up the Bot Yourself
+
+You might wonder why you need to run the bot on your own server instead of using a pre-configured one. The reason is that a service account provides several benefits:
+- Persistent access without the need for user login.
+- Server-side authentication without manual OAuth token refresh.
+- Ideal for background and automated tasks.
+
+Since the bot requires access to your Google Sheets via a service account, it would be insecure to have someone else manage your credentials. Running the bot yourself ensures that your credentials remain secure.
+
+## Troubleshooting
+If you encounter any issues, ensure that all steps are followed carefully, particularly the configuration of Google Sheets API and Discord bot permissions.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![Node.js][Node.js]][Node-url]
+* [![Google API][Google-API]][Google-API-url]
+* [![Discord.js][Discord.js]][Discord.js-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-
-Setting up the bot can be kind of confusing for the first time but this documentation should help you get started! There is a couple of things we'll have to configure, such as:
-- Enabling the Sheets API on your Google Cloud Console
-- Adding a Service Account for your Sheets API
-- Creating a Google Sheets and sharing your Service Account with it
-- Downloading the secrets.json for your service account and putting it in the /config folder
-- Creating a new Discord bot
-- Getting the Discord Bot token and putting it in a config.json file in the /config folder
-- Running the Discord bot locally (or on a server)
-
-You might ask, why do I have to run the bot myself, why can't I just add yours? Well... a service account has a couple of benefits.
-> - Persistent access without user login
-> - Server-side authentication
-> - No OAuth token refresh needed
-> - Suitable for background/automated tasks
-
-And since you'd have to link your service account to the bot, it would be kind of risky to set up a command to upload your credentials to the bot. This adds a whole new layer of security mishaps that I don't think are worth it. The bot is lightweight and easy to run, the only issue is that you have to find a server to run it for you. 
-
-
-
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -188,24 +155,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## TODO
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+- [ ] Set up Dynamic GSheet Configuration
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -221,82 +175,15 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### Top contributors:
-
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
-</a>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
 ## License
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[Node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/
+[Google-API]: https://img.shields.io/badge/Google%20API-4285F4?style=for-the-badge&logo=google&logoColor=white
+[Google-API-url]: https://cloud.google.com/apis
+[Discord.js]: https://img.shields.io/badge/Discord.js-5865F2?style=for-the-badge&logo=discord&logoColor=white
+[Discord.js-url]: https://discord.js.org/
